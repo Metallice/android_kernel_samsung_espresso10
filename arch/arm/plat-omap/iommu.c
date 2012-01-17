@@ -865,12 +865,14 @@ struct iommu *iommu_get(const char *name)
 
 	if (obj->refcount++ == 0) {
 		dev_info(obj->dev, "%s: %s qos_request\n", __func__, obj->name);
-		pm_qos_update_request(obj->qos_request,
-				SET_MPU_CORE_CONSTRAINT);
+#ifdef CONFIG_OMAP_IPU_DEEPIDLE
+		pm_qos_update_request(obj->qos_request, 1500);
+#else
+		pm_qos_update_request(obj->qos_request, SET_MPU_CORE_CONSTRAINT);
+#endif
 		err = iommu_enable(obj);
 		if (err) {
-			pm_qos_update_request(obj->qos_request,
-					CLEAR_MPU_CORE_CONSTRAINT);
+			pm_qos_update_request(obj->qos_request, CLEAR_MPU_CORE_CONSTRAINT);
 			goto err_enable;
 		}
 		flush_iotlb_all(obj);
@@ -913,8 +915,7 @@ void iommu_put(struct iommu *obj)
 
 	if (--obj->refcount == 0) {
 		iommu_disable(obj);
-		pm_qos_update_request(obj->qos_request,
-				CLEAR_MPU_CORE_CONSTRAINT);
+		pm_qos_update_request(obj->qos_request, -1);
 	}
 
 	module_put(obj->owner);
