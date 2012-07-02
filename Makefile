@@ -373,10 +373,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -funswitch-loops -fpredictive-commoning -fgcse-after-reload \
 		   -ftree-vectorize -floop-interchange -floop-strip-mine -floop-block \
 		   -fno-delete-null-pointer-checks \
-		   -ffast-math \
-		   -mtune=cortex-a9 \
-		   -march=armv7-a \
-		   -mfpu=neon
+		   -ffast-math
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
