@@ -13,9 +13,9 @@
  *
  */
 
-#define DEBUG_PRINT			1
+//#define DEBUG_PRINT			1
 #define FACTORY_TESTING			1
-#define TOUCH_BOOST			1
+//#define TOUCH_BOOST			1
 #define CONTROL_JITTER			1
 
 #if DEBUG_PRINT
